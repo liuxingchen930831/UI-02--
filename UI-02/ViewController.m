@@ -75,17 +75,24 @@ disabledImage:(NSString *) disabledImage
     CGFloat shopH = 90;
     //每一行的列数
     int cols = 3;
-    
+    //每一列的间距 (self.shopsView.frame.size.width - cols * shopW)是算出每一列的间距一共是多长 后面的 /(cols-1) 是算出每个cols间距的宽度 为什么要-1 因为最后一个是贴边显示所以-1
     CGFloat colsMargin = (self.shopView.frame.size.width - cols * shopW)/(cols -1);
+    /**
+     获取商品的索引
+     为什么要获取商品的索引:因为每次点击都要添加商品 所以商品x值都是一直在变得。
+     为什么拿到shopsView的所有子控件个数就拿到了索引:shopsViews所有的子控件不就是每个商品的索引吗，添加一次count 为0 添加两次count 为1 往下以此类推
+     */
     NSUInteger index = self.shopView.subviews.count;
-    
+    //商品的x值
     NSUInteger col = index % cols;
+    // shopX 为什么要这么算 col == 拿到第几个商品 (shopW + colsMargin) ==拿到商品的宽+每一行的间距
     CGFloat shopX = col *(colsMargin +shopW);
     
-    
+    //每一行的间距
     CGFloat rowMargin = 10;
-    
+    //商品的y值
     NSUInteger row = index / cols;
+    // shopY 为什么要这么算 row == 拿到第几个商品 (shopW + rowMargin) ==拿到商品的高+每一行的间距
     CGFloat shopY  = row *(rowMargin + shopH);
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(shopX, shopY, shopW, shopH)];
